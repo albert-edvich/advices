@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advices from Darya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8E7;
+            --rust: #C65D3B;
+            --deep-teal: #2D4654;
+            --sage: #7A9B76;
+            --warm-gray: #8B7E74;
+            --accent: #E8B298;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #FFF5DC 100%);
+            color: var(--deep-teal);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(122, 155, 118, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(198, 93, 59, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            color: var(--rust);
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.02);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--warm-gray);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 10px 30px rgba(45, 70, 84, 0.08),
+                0 1px 3px rgba(45, 70, 84, 0.06);
+            border: 2px solid rgba(122, 155, 118, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .product-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .product-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--rust), var(--sage));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 50px rgba(45, 70, 84, 0.12),
+                0 5px 15px rgba(45, 70, 84, 0.08);
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .product-type {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--sage);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--deep-teal);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .product-description {
+            color: var(--warm-gray);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--rust);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .price-label {
+            font-size: 0.9rem;
+            color: var(--warm-gray);
+            margin-top: 5px;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(45, 70, 84, 0.08);
+            border: 2px solid rgba(122, 155, 118, 0.15);
+            animation: fadeInUp 0.8s ease-out 0.3s;
+            animation-fill-mode: both;
+        }
+
+        .info-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--deep-teal);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-section h2::before {
+            content: '';
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rust), var(--sage));
+            display: inline-block;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .payment-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--cream);
+            border: 2px solid var(--accent);
+            border-radius: 50px;
+            font-weight: 500;
+            color: var(--deep-teal);
+            transition: all 0.3s ease;
+        }
+
+        .payment-badge::before {
+            content: '💳';
+            font-size: 1.2rem;
+        }
+
+        .payment-badge:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .refund-policy {
+            background: linear-gradient(135deg, rgba(198, 93, 59, 0.08), rgba(122, 155, 118, 0.08));
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid var(--rust);
+        }
+
+        .refund-policy h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--rust);
+            margin-bottom: 10px;
+        }
+
+        .refund-policy p {
+            color: var(--deep-teal);
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: var(--warm-gray);
+            font-size: 0.9rem;
+            animation: fadeInUp 0.8s ease-out 0.4s;
+            animation-fill-mode: both;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+
+            .product-card {
+                padding: 30px 20px;
+            }
+
+            .info-section {
+                padding: 30px 20px;
+            }
+
+            .payment-methods {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Advices from Darya</h1>
+            <p class="tagline">Professional wisdom, personally delivered</p>
+        </header>
+
+        <div class="products">
+            <div class="product-card">
+                <div class="product-type">Premium Service</div>
+                <h2 class="product-name">Unsolicited Advice</h2>
+                <p class="product-description">
+                    Receive candid, unfiltered guidance on matters you didn't know you needed insight on. 
+                    Sometimes the best advice is the kind you never asked for.
+                </p>
+                <div class="price">$2</div>
+                <div class="price-label">per wisdom drop</div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-type">Bespoke Service</div>
+                <h2 class="product-name">Solicited Advice</h2>
+                <p class="product-description">
+                    Ask your burning questions and receive thoughtful, tailored guidance specifically addressing 
+                    your unique situation. The classic advisory experience.
+                </p>
+                <div class="price">$3</div>
+                <div class="price-label">per consultation</div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Payment Methods</h2>
+            <div class="payment-methods">
+                <span class="payment-badge">Visa</span>
+                <span class="payment-badge">Mastercard</span>
+                <span class="payment-badge">UzCard</span>
+                <span class="payment-badge">Humo</span>
+                <span class="payment-badge">Bank Transfer</span>
+            </div>
+
+            <div class="refund-policy">
+                <h3>Refund Policy</h3>
+                <p>All advice sales are final. No refunds will be issued. Choose wisely, act accordingly.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 Advices from Darya. All wisdom reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
