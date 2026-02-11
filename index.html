@@ -278,6 +278,50 @@
             animation-fill-mode: both;
         }
 
+        .review-card {
+            background: linear-gradient(135deg, rgba(122, 155, 118, 0.05), rgba(232, 178, 152, 0.05));
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(122, 155, 118, 0.2);
+            position: relative;
+        }
+
+        .review-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: var(--accent);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        .review-stars {
+            color: var(--rust);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .review-text {
+            color: var(--deep-teal);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .review-author {
+            color: var(--warm-gray);
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: right;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 30px 15px;
@@ -341,6 +385,19 @@
             <div class="refund-policy">
                 <h3>Refund Policy</h3>
                 <p>All advice sales are final. No refunds will be issued. Choose wisely, act accordingly.</p>
+            </div>
+        </div>
+
+        <div class="info-section" style="margin-top: 40px;">
+            <h2>Customer Reviews</h2>
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">
+                    "Darya's advices genuinely changed my life. I came in skeptical, left enlightened. 
+                    The unsolicited advice hit differently – it's exactly what I needed to hear but 
+                    was too afraid to ask. Worth every penny."
+                </p>
+                <div class="review-author">— Albert</div>
             </div>
         </div>
 
