@@ -142,6 +142,10 @@
             animation-delay: 0.5s;
         }
 
+        .product-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
         .product-card::before {
             content: '';
             position: absolute;
@@ -201,6 +205,119 @@
             font-size: 0.9rem;
             color: var(--warm-gray);
             margin-top: 5px;
+        }
+
+        .packages-section {
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out 0.7s;
+            animation-fill-mode: both;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--deep-teal);
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--rust), var(--sage));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .package-card {
+            background: linear-gradient(135deg, rgba(122, 155, 118, 0.05), rgba(232, 178, 152, 0.05));
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 10px 30px rgba(45, 70, 84, 0.08),
+                0 1px 3px rgba(45, 70, 84, 0.06);
+            border: 2px solid var(--rust);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--rust), var(--sage), var(--accent));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .package-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 50px rgba(45, 70, 84, 0.15),
+                0 5px 15px rgba(45, 70, 84, 0.1);
+        }
+
+        .package-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .package-badge {
+            display: inline-block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: white;
+            background: var(--rust);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .package-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--deep-teal);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .package-description {
+            color: var(--warm-gray);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .package-price {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--rust);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .package-price .period {
+            font-size: 1.2rem;
+            color: var(--warm-gray);
+            font-weight: 500;
+            font-family: 'Work Sans', sans-serif;
         }
 
         .info-section {
@@ -343,6 +460,10 @@
                 padding: 30px 20px;
             }
 
+            .package-card {
+                padding: 30px 20px;
+            }
+
             .info-section {
                 padding: 30px 20px;
             }
@@ -414,6 +535,42 @@
                 </p>
                 <div class="price">$10</div>
                 <div class="price-label">premium package</div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-type">Specialty Service</div>
+                <h2 class="product-name">Sick Burn</h2>
+                <p class="product-description">
+                    A perfectly crafted roast to keep you humble and in shape. 
+                    Character-building criticism delivered with precision. Ego deflation guaranteed.
+                </p>
+                <div class="price">$4</div>
+                <div class="price-label">per reality check</div>
+            </div>
+        </div>
+
+        <div class="packages-section">
+            <h2 class="section-title">Special Packages</h2>
+            <div class="packages">
+                <div class="package-card">
+                    <div class="package-badge">Monthly Plan</div>
+                    <h3 class="package-name">Advice Subscription</h3>
+                    <p class="package-description">
+                        Unlimited unsolicited advice delivered at Darya's discretion. 
+                        She decides when you need it most. Surrender control, embrace wisdom.
+                    </p>
+                    <div class="package-price">$20<span class="period">/month</span></div>
+                </div>
+
+                <div class="package-card">
+                    <div class="package-badge">⭐ Customer Favorite</div>
+                    <h3 class="package-name">The Albert Special</h3>
+                    <p class="package-description">
+                        Life-changing advice package named after our most satisfied customer. 
+                        Comprehensive guidance that transforms perspectives. Results may vary.
+                    </p>
+                    <div class="package-price">$15<span class="period">/one-time</span></div>
+                </div>
             </div>
         </div>
 
