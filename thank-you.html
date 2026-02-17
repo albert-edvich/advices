@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You — Advices from Darya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8E7;
+            --rust: #C65D3B;
+            --deep-teal: #2D4654;
+            --sage: #7A9B76;
+            --warm-gray: #8B7E74;
+            --accent: #E8B298;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #FFF5DC 100%);
+            color: var(--deep-teal);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(122, 155, 118, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(198, 93, 59, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 50px;
+            box-shadow: 
+                0 20px 60px rgba(45, 70, 84, 0.1),
+                0 1px 3px rgba(45, 70, 84, 0.06);
+            border: 2px solid rgba(122, 155, 118, 0.15);
+        }
+
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            display: block;
+            animation: bounce 1s ease-out 0.5s both;
+        }
+
+        @keyframes bounce {
+            0%   { transform: scale(0); opacity: 0; }
+            60%  { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--rust);
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            color: var(--warm-gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rust), var(--sage));
+            border-radius: 2px;
+            margin: 25px auto;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--rust), #A84D2F);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(198, 93, 59, 0.3);
+        }
+
+        .site-name {
+            margin-top: 40px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <span class="icon">💌</span>
+            <h1>Message Received!</h1>
+            <div class="divider"></div>
+            <p>Thank you for reaching out. Darya has been notified and will get back to you with the wisdom you deserve.</p>
+            <p>In the meantime, feel free to browse our advice offerings.</p>
+            <a href="https://advicesfromdarya.online" class="back-btn">Back to the Shop</a>
+            <p class="site-name">Advices from Darya</p>
+        </div>
+    </div>
+</body>
+</html>
