@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Advices from Darya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8E7;
+            --rust: #C65D3B;
+            --deep-teal: #2D4654;
+            --sage: #7A9B76;
+            --warm-gray: #8B7E74;
+            --accent: #E8B298;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #FFF5DC 100%);
+            color: var(--deep-teal);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(122, 155, 118, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(198, 93, 59, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .site-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--rust);
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 900;
+            color: var(--deep-teal);
+            margin-bottom: 10px;
+        }
+
+        .last-updated {
+            color: var(--warm-gray);
+            font-size: 0.9rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(45, 70, 84, 0.08);
+            border: 2px solid rgba(122, 155, 118, 0.15);
+            animation: fadeInUp 0.8s ease-out 0.1s;
+            animation-fill-mode: both;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--rust);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(198, 93, 59, 0.15);
+        }
+
+        p {
+            color: var(--warm-gray);
+            margin-bottom: 12px;
+            font-size: 0.97rem;
+            line-height: 1.8;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(122, 155, 118, 0.06), rgba(198, 93, 59, 0.06));
+            border-left: 4px solid var(--sage);
+            padding: 15px 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 15px 0;
+        }
+
+        .highlight p {
+            margin-bottom: 0;
+            font-weight: 500;
+            color: var(--deep-teal);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: var(--warm-gray);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--rust);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .content-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="https://advicesfromdarya.online" class="site-name">Advices from Darya</a>
+            <h1>Privacy Policy</h1>
+            <p class="last-updated">Last updated: February 2026</p>
+        </header>
+
+        <div class="content-card">
+
+            <div class="section">
+                <h2>1. Introduction</h2>
+                <p>At Advices from Darya, we take your privacy seriously. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your personal data when you visit advicesfromdarya.online.</p>
+            </div>
+
+            <div class="section">
+                <h2>2. Information We Collect</h2>
+                <p>We may collect the following types of information:</p>
+                <p><strong style="color: var(--deep-teal);">Contact form submissions</strong> — When you use our contact form, we collect your name, email address, and message content. This is processed via Un-static Forms.</p>
+                <p><strong style="color: var(--deep-teal);">Payment information</strong> — When you make a purchase, payment details are processed directly by our payment providers (Stripe, Payme, Click). We do not store your card or payment details on our servers.</p>
+                <p><strong style="color: var(--deep-teal);">Usage data</strong> — Basic analytics data such as pages visited and browser type may be collected automatically by GitHub Pages infrastructure.</p>
+            </div>
+
+            <div class="section">
+                <h2>3. How We Use Your Information</h2>
+                <p>We use the information we collect solely to:</p>
+                <p>— Respond to your messages and inquiries</p>
+                <p>— Process and fulfill your purchases</p>
+                <p>— Improve the Site and our services</p>
+                <div class="highlight">
+                    <p>We will never sell, rent, or share your personal information with third parties for marketing purposes.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>4. Third-Party Services</h2>
+                <p>We use the following third-party services which may process your data under their own privacy policies:</p>
+                <p><strong style="color: var(--deep-teal);">GitHub Pages</strong> — Hosts this website. Subject to GitHub's Privacy Policy.</p>
+                <p><strong style="color: var(--deep-teal);">Un-static Forms</strong> — Processes contact form submissions. Subject to Un-static's Privacy Policy.</p>
+                <p><strong style="color: var(--deep-teal);">Stripe / Payme / Click</strong> — Process payments. Subject to their respective privacy policies.</p>
+            </div>
+
+            <div class="section">
+                <h2>5. Cookies</h2>
+                <p>This Site does not use its own cookies. However, third-party services embedded in the Site (such as payment processors) may set cookies on your device. You can control cookie settings through your browser preferences.</p>
+            </div>
+
+            <div class="section">
+                <h2>6. Data Retention</h2>
+                <p>Contact form messages are retained for as long as necessary to respond to your inquiry. Payment records are retained as required by applicable financial regulations. You may request deletion of your data at any time by contacting us.</p>
+            </div>
+
+            <div class="section">
+                <h2>7. Your Rights</h2>
+                <p>Depending on your location, you may have the right to access, correct, or delete your personal data. To exercise any of these rights, please reach out via our <a href="https://advicesfromdarya.online/#contact" style="color: var(--rust); font-weight: 600;">contact form</a> and we will respond promptly.</p>
+            </div>
+
+            <div class="section">
+                <h2>8. Security</h2>
+                <p>We take reasonable measures to protect your information. Our Site is served over HTTPS and we use reputable third-party services for form handling and payments. However, no method of transmission over the internet is 100% secure.</p>
+            </div>
+
+            <div class="section">
+                <h2>9. Changes to This Policy</h2>
+                <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date. We encourage you to review this page periodically.</p>
+            </div>
+
+            <div class="section">
+                <h2>10. Contact</h2>
+                <p>If you have any questions or concerns about this Privacy Policy, please contact us via our <a href="https://advicesfromdarya.online/#contact" style="color: var(--rust); font-weight: 600;">contact form</a>.</p>
+            </div>
+
+        </div>
+
+        <footer>
+            <div class="footer-links">
+                <a href="https://advicesfromdarya.online">Home</a>
+                <a href="https://advicesfromdarya.online/terms-of-service.html">Terms of Service</a>
+            </div>
+            <p>© 2026 Advices from Darya. All wisdom reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
