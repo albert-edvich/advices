@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logging Out — Ask Darya</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, #FFF8E7 0%, #FFF5DC 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #2D4654;
+        }
+        .message {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(45, 70, 84, 0.1);
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #C65D3B;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <h1>Logging Out...</h1>
+        <p>Please wait while we clear your session.</p>
+    </div>
+
+    <script>
+        // Replace with your actual credentials
+        const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function logout() {
+            // Sign out from Supabase
+            await supabaseClient.auth.signOut();
+            
+            // Clear all storage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            // Wait a moment then redirect
+            setTimeout(() => {
+                window.location.href = '/login.html';
+            }, 1000);
+        }
+
+        logout();
+    </script>
+</body>
+</html>
