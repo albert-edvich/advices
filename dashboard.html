@@ -325,7 +325,14 @@
         // LOAD ORDERS
         // =====================================================
         async function loadOrders(userId) {
-            const { data: orders, error } = await supabaseClient
+            // Check if user is admin
+            const { data: isAdminResult } = await supabaseClient
+                .rpc('is_admin');
+            
+            const isAdmin = isAdminResult;
+
+            // Build query
+            let query = supabaseClient
                 .from('orders')
                 .select(`
                     *,
@@ -333,12 +340,23 @@
                         product_name,
                         quantity,
                         unit_price
+                    ),
+                    profiles!orders_user_id_fkey (
+                        email,
+                        full_name
                     )
-                `)
-                .eq('user_id', userId)
+                `);
+            
+            // If not admin, filter by user_id
+            if (!isAdmin) {
+                query = query.eq('user_id', userId);
+            }
+
+            const { data: orders, error } = await query
                 .order('created_at', { ascending: false });
 
             if (error) {
+                console.error('Error loading orders:', error);
                 document.getElementById('orders-content').innerHTML = 
                     '<p class="empty-state">Error loading orders</p>';
                 return;
@@ -350,7 +368,17 @@
                 return;
             }
 
-            const ordersHTML = orders.map(order => `
+            // Show admin badge if admin
+            const adminBadge = isAdmin ? '<span style="background: var(--rust); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; margin-left: 10px;">ADMIN VIEW</span>' : '';
+
+            const ordersHTML = orders.map(order => {
+                // Show customer info for admins
+                const customerInfo = isAdmin && order.profiles ? 
+                    `<div style="color: var(--warm-gray); font-size: 0.85rem; margin-top: 4px;">
+                        Customer: ${order.profiles.email || 'Guest'}
+                    </div>` : '';
+
+                return `
                 <div class="order-card">
                     <div class="order-header">
                         <div>
@@ -358,6 +386,7 @@
                             <div style="color: var(--warm-gray); font-size: 0.9rem;">
                                 ${new Date(order.created_at).toLocaleDateString()}
                             </div>
+                            ${customerInfo}
                         </div>
                         <div>
                             <div class="order-status status-${order.status}">
@@ -378,6 +407,12 @@
                 </div>
             `).join('');
 
+            // Update section title if admin
+            const sectionTitle = document.querySelector('.section-card h2');
+            if (sectionTitle && isAdmin) {
+                sectionTitle.innerHTML = 'Order History <span style="background: var(--rust); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; margin-left: 10px; font-weight: 500;">ADMIN - ALL ORDERS</span>';
+            }
+
             document.getElementById('orders-content').innerHTML = 
                 `<div class="orders-list">${ordersHTML}</div>`;
         }
@@ -386,16 +421,34 @@
         // LOAD SUBSCRIPTIONS
         // =====================================================
         async function loadSubscriptions(userId) {
-            const { data: subs, error } = await supabaseClient
+            // Check if user is admin
+            const { data: isAdminResult } = await supabaseClient
+                .rpc('is_admin');
+            
+            const isAdmin = isAdminResult;
+
+            // Build query
+            let query = supabaseClient
                 .from('subscriptions')
                 .select(`
                     *,
-                    products (name, price)
-                `)
-                .eq('user_id', userId)
+                    products (name, price),
+                    profiles!subscriptions_user_id_fkey (
+                        email,
+                        full_name
+                    )
+                `);
+            
+            // If not admin, filter by user_id
+            if (!isAdmin) {
+                query = query.eq('user_id', userId);
+            }
+
+            const { data: subs, error } = await query
                 .eq('status', 'active');
 
             if (error) {
+                console.error('Error loading subscriptions:', error);
                 document.getElementById('subscriptions-content').innerHTML = 
                     '<p class="empty-state">Error loading subscriptions</p>';
                 return;
@@ -407,7 +460,14 @@
                 return;
             }
 
-            const subsHTML = subs.map(sub => `
+            const subsHTML = subs.map(sub => {
+                // Show customer info for admins
+                const customerInfo = isAdmin && sub.profiles ? 
+                    `<div style="color: var(--warm-gray); font-size: 0.85rem; margin-top: 4px;">
+                        Customer: ${sub.profiles.email || 'Unknown'}
+                    </div>` : '';
+
+                return `
                 <div class="order-card">
                     <div class="order-header">
                         <div>
@@ -415,6 +475,7 @@
                             <div style="color: var(--warm-gray); font-size: 0.9rem;">
                                 Renews: ${new Date(sub.current_period_end).toLocaleDateString()}
                             </div>
+                            ${customerInfo}
                         </div>
                         <div style="text-align: right;">
                             <div style="font-weight: 600; color: var(--rust);">
@@ -427,6 +488,18 @@
                     </div>
                 </div>
             `).join('');
+
+            // Update section title if admin
+            const sectionCards = document.querySelectorAll('.section-card');
+            const subsSection = Array.from(sectionCards).find(card => 
+                card.querySelector('h2')?.textContent.includes('Subscriptions')
+            );
+            if (subsSection && isAdmin) {
+                const title = subsSection.querySelector('h2');
+                if (title) {
+                    title.innerHTML = 'Active Subscriptions <span style="background: var(--rust); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; margin-left: 10px; font-weight: 500;">ADMIN - ALL SUBSCRIPTIONS</span>';
+                }
+            }
 
             document.getElementById('subscriptions-content').innerHTML = subsHTML;
         }
