@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You! — Ask Darya</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8E7;
+            --rust: #C65D3B;
+            --deep-teal: #2D4654;
+            --sage: #7A9B76;
+            --warm-gray: #8B7E74;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #FFF5DC 100%);
+            color: var(--deep-teal);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(45, 70, 84, 0.1);
+            border: 2px solid rgba(122, 155, 118, 0.15);
+            text-align: center;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--sage), #6B8A68);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .checkmark svg {
+            width: 45px;
+            height: 45px;
+            stroke: white;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            animation: draw 0.5s ease-out 0.3s forwards;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--deep-teal);
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--warm-gray);
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            background: var(--cream);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(139, 126, 116, 0.2);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--deep-teal);
+        }
+
+        .info-value {
+            color: var(--warm-gray);
+        }
+
+        .loading {
+            color: var(--warm-gray);
+            font-style: italic;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--rust), #A84D2F);
+            color: white;
+            box-shadow: 0 4px 15px rgba(198, 93, 59, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(198, 93, 59, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--rust);
+            border: 2px solid var(--rust);
+        }
+
+        .btn-secondary:hover {
+            background: var(--cream);
+        }
+
+        .note {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(139, 126, 116, 0.2);
+            color: var(--warm-gray);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 480px) {
+            .success-card {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-card">
+            <div class="checkmark">
+                <svg viewBox="0 0 52 52">
+                    <path d="M14 27l7.5 7.5L38 18"/>
+                </svg>
+            </div>
+
+            <h1>Thank You!</h1>
+            <p class="subtitle">Your payment was successful</p>
+
+            <div class="info-box" id="order-info">
+                <div class="info-item">
+                    <span class="info-label">Status</span>
+                    <span class="info-value">✅ Confirmed</span>
+                </div>
+                <div class="info-item" id="amount-info" style="display: none;">
+                    <span class="info-label">Amount</span>
+                    <span class="info-value loading" id="amount">Loading...</span>
+                </div>
+                <div class="info-item" id="email-info" style="display: none;">
+                    <span class="info-label">Receipt sent to</span>
+                    <span class="info-value loading" id="email">Loading...</span>
+                </div>
+                <div class="info-item" id="product-info" style="display: none;">
+                    <span class="info-label">Product</span>
+                    <span class="info-value loading" id="product">Loading...</span>
+                </div>
+            </div>
+
+            <p style="color: var(--sage); font-weight: 600; margin-bottom: 10px;">
+                📧 Check your email for the receipt and next steps
+            </p>
+
+            <div class="buttons">
+                <a href="/dashboard.html" class="btn btn-primary">View My Orders</a>
+                <a href="/" class="btn btn-secondary">Back to Shop</a>
+            </div>
+
+            <div class="note">
+                <p>Questions? <a href="/#contact" style="color: var(--rust); text-decoration: none; font-weight: 600;">Contact us</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get session ID from URL if passed
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+
+        if (sessionId) {
+            // If you want to fetch and display order details from Stripe
+            // You would need a server endpoint to do this securely
+            // For now, we'll just show that we have the session
+            console.log('Checkout session ID:', sessionId);
+            
+            // You could make an API call to your server to get order details
+            // fetch('/api/get-checkout-session?session_id=' + sessionId)
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         document.getElementById('amount').textContent = '$' + (data.amount_total / 100).toFixed(2);
+            //         document.getElementById('email').textContent = data.customer_email;
+            //         document.getElementById('product').textContent = data.line_items[0].description;
+            //         
+            //         document.getElementById('amount-info').style.display = 'flex';
+            //         document.getElementById('email-info').style.display = 'flex';
+            //         document.getElementById('product-info').style.display = 'flex';
+            //     });
+        }
+    </script>
+</body>
+</html>
