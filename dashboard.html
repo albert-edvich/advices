@@ -398,7 +398,7 @@
                         </div>
                     </div>
                     <div class="order-items">
-                        ${order.order_items.map(item => `
+                        ${(order.order_items || []).map(item => `
                             <div class="order-item">
                                 ${item.quantity}x ${item.product_name} - $${item.unit_price}
                             </div>
@@ -408,10 +408,16 @@
             `;
             }).join('');
 
-            // Update section title if admin
-            const sectionTitle = document.querySelector('.section-card h2');
-            if (sectionTitle && isAdmin) {
-                sectionTitle.innerHTML = 'Order History <span style="background: var(--rust); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; margin-left: 10px; font-weight: 500;">ADMIN - ALL ORDERS</span>';
+            // Update section title if admin - target the Orders section specifically
+            const sectionCards = document.querySelectorAll('.section-card');
+            const ordersSection = Array.from(sectionCards).find(card => 
+                card.querySelector('#orders-content')
+            );
+            if (ordersSection && isAdmin) {
+                const title = ordersSection.querySelector('h2');
+                if (title) {
+                    title.innerHTML = 'Order History <span style="background: var(--rust); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; margin-left: 10px; font-weight: 500;">ADMIN - ALL ORDERS</span>';
+                }
             }
 
             document.getElementById('orders-content').innerHTML = 
@@ -472,7 +478,7 @@
                 <div class="order-card">
                     <div class="order-header">
                         <div>
-                            <div class="order-id">${sub.products.name}</div>
+                            <div class="order-id">${sub.products?.name || 'Unknown Product'}</div>
                             <div style="color: var(--warm-gray); font-size: 0.9rem;">
                                 Renews: ${new Date(sub.current_period_end).toLocaleDateString()}
                             </div>
@@ -480,7 +486,7 @@
                         </div>
                         <div style="text-align: right;">
                             <div style="font-weight: 600; color: var(--rust);">
-                                $${sub.products.price}/month
+                                $${sub.products?.price || '0'}/month
                             </div>
                             <div class="order-status status-completed">
                                 ${sub.status}
