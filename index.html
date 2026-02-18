@@ -60,6 +60,32 @@
             text-align: center;
             margin-bottom: 60px;
             animation: fadeInDown 0.8s ease-out;
+            position: relative;
+        }
+
+        .top-nav {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 10;
+        }
+
+        .account-link {
+            display: inline-block;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--rust), #A84D2F);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(198, 93, 59, 0.2);
+        }
+
+        .account-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(198, 93, 59, 0.3);
         }
 
         @keyframes fadeInDown {
@@ -682,6 +708,20 @@
                 padding: 30px 15px;
             }
 
+            header {
+                margin-top: 50px;
+            }
+
+            .top-nav {
+                position: static;
+                margin-bottom: 20px;
+            }
+
+            .account-link {
+                font-size: 0.85rem;
+                padding: 8px 20px;
+            }
+
             .product-card {
                 padding: 30px 20px;
             }
@@ -703,10 +743,12 @@
 <body>
     <div class="container">
         <header>
+            <nav class="top-nav">
+                <a href="/login.html" class="account-link">My Account</a>
+            </nav>
             <h1>Ask Darya</h1>
             <span id="cat-trigger" title="">🐱</span>
             <p class="tagline">Professional wisdom, personally delivered</p>
-            <a href="https://unsolicited-advice.store/login.html">My Account</a>
         </header>
 
         <div class="products">
@@ -719,7 +761,7 @@
                 </p>
                 <div class="price">$2</div>
                 <div class="price-label">per wisdom drop</div>
-                <a href="https://buy.stripe.com/test_bJecN7eBIfFJ4GW9fW0sU00" class="buy-btn">Buy Now</a>
+                <a href="#" class="buy-btn">Buy Now</a>
             </div>
 
             <div class="product-card">
@@ -731,7 +773,7 @@
                 </p>
                 <div class="price">$3</div>
                 <div class="price-label">per consultation</div>
-                <a href="https://buy.stripe.com/test_cNiaEZ65c0KP3CS3VC0sU01" class="buy-btn">Buy Now</a>
+                <a href="#" class="buy-btn">Buy Now</a>
             </div>
 
             <div class="product-card">
@@ -743,7 +785,7 @@
                 </p>
                 <div class="price">$5</div>
                 <div class="price-label">per truth bomb</div>
-                <a href="https://buy.stripe.com/test_cNi3cx3X4ctxc9o77O0sU03" class="buy-btn">Buy Now</a>
+                <a href="#" class="buy-btn">Buy Now</a>
             </div>
 
             <div class="product-card">
@@ -755,7 +797,7 @@
                 </p>
                 <div class="price">$7</div>
                 <div class="price-label">urgent response</div>
-                <a href="https://buy.stripe.com/test_28E6oJ79g1OTa1ggIo0sU04" class="buy-btn">Buy Now</a>
+                <a href="#" class="buy-btn">Buy Now</a>
             </div>
 
             <div class="product-card">
@@ -767,7 +809,7 @@
                 </p>
                 <div class="price">$10</div>
                 <div class="price-label">premium package</div>
-                <a href="https://buy.stripe.com/test_fZufZjgJQalp6P477O0sU06" class="buy-btn">Buy Now</a>
+                <a href="#" class="buy-btn">Buy Now</a>
             </div>
 
             <div class="product-card">
@@ -779,7 +821,7 @@
                 </p>
                 <div class="price">$4</div>
                 <div class="price-label">per reality check</div>
-                <a href="https://buy.stripe.com/test_fZu4gBdxEeBFgpE77O0sU02" class="buy-btn">Buy Now</a>
+                <a href="#" class="buy-btn">Buy Now</a>
             </div>
         </div>
 
@@ -794,7 +836,7 @@
                         She decides when you need it most. Surrender control, embrace wisdom.
                     </p>
                     <div class="package-price">$20<span class="period">/month</span></div>
-                    <a href="https://buy.stripe.com/test_8x24gBfFM8dh7T8ak00sU07" class="buy-btn">Subscribe Now</a>
+                    <a href="#" class="buy-btn">Subscribe Now</a>
                 </div>
 
                 <div class="package-card">
@@ -805,7 +847,7 @@
                         Comprehensive guidance that transforms perspectives. Results may vary.
                     </p>
                     <div class="package-price">$15<span class="period">/one-time</span></div>
-                    <a href="https://buy.stripe.com/test_eVq14pctAbpt3CSak00sU05" class="buy-btn">Buy Now</a>
+                    <a href="#" class="buy-btn">Buy Now</a>
                 </div>
             </div>
         </div>
@@ -842,7 +884,7 @@
         <div class="info-section" style="margin-top: 40px;" id="contact">
             <h2>Write to Us</h2>
             <p class="contact-intro">Got a question, a request, or just want to say hello? Drop us a message and Darya will get back to you.</p>
-            <form class="contact-form" method="post" action="https://forms.un-static.com/forms/40678790a28e39666c31cb4621710aa4038df946">
+            <form class="contact-form" method="post" action="https://forms.un-static.com/forms/YOUR_ENDPOINT_REFERENCE">
                 <div class="form-group">
                     <label for="name">Your Name</label>
                     <input type="text" id="name" name="name" placeholder="Enter your name" required>
@@ -862,7 +904,7 @@
 
         <footer>
             <div class="footer-links">
-                <a href="https://unsolicited-advice.store/login.html">My Account</a>
+                <a href="/login.html">My Account</a>
                 <a href="https://unsolicited-advice.store/terms-of-service.html">Terms of Service</a>
                 <a href="https://unsolicited-advice.store/privacy-policy.html">Privacy Policy</a>
             </div>
