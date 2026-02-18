@@ -350,27 +350,21 @@
         }
 
         // =====================================================
-        // CHECK IF ALREADY LOGGED IN
+        // CHECK IF ALREADY LOGGED IN (OPTIONAL)
         // =====================================================
+        // Commented out to prevent redirect loops
+        // Users can manually click "My Account" if already logged in
+        // Uncomment if you want auto-redirect after fixing session issues
+        
+        /*
         async function checkAuth() {
-            // Prevent redirect loop
-            if (sessionStorage.getItem('checking_auth')) {
-                sessionStorage.removeItem('checking_auth');
-                return;
-            }
-            
-            sessionStorage.setItem('checking_auth', 'true');
-            
             const { data: { session } } = await supabaseClient.auth.getSession();
-            
-            sessionStorage.removeItem('checking_auth');
-            
             if (session) {
                 window.location.href = '/dashboard.html';
             }
         }
-
         checkAuth();
+        */
     </script>
 </body>
 </html>
