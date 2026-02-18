@@ -269,20 +269,20 @@
                     console.error('Auth error:', error);
                     // Clear any bad session data
                     await supabaseClient.auth.signOut();
-                    window.location.href = '/login.html';
+                    window.location.href = '/login.html?from=dashboard';
                     return null;
                 }
                 
                 if (!session || !session.user) {
                     // No valid session - redirect to login
-                    window.location.href = '/login.html';
+                    window.location.href = '/login.html?from=dashboard';
                     return null;
                 }
                 
                 return session.user;
             } catch (err) {
                 console.error('Unexpected auth error:', err);
-                window.location.href = '/login.html';
+                window.location.href = '/login.html?from=dashboard';
                 return null;
             }
         }
@@ -435,8 +435,7 @@
         // LOGOUT
         // =====================================================
         async function handleLogout() {
-            await supabaseClient.auth.signOut();
-            window.location.href = '/login.html';
+            window.location.href = '/logout.html';
         }
 
         // =====================================================
