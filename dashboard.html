@@ -262,25 +262,29 @@
         // CHECK AUTHENTICATION
         // =====================================================
         async function checkAuth() {
-            // Prevent redirect loop
-            if (sessionStorage.getItem('checking_auth')) {
-                sessionStorage.removeItem('checking_auth');
-                return null;
-            }
-            
-            sessionStorage.setItem('checking_auth', 'true');
-            
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            
-            sessionStorage.removeItem('checking_auth');
-            
-            if (!session) {
-                // Redirect to login page if not authenticated
+            try {
+                const { data: { session }, error } = await supabaseClient.auth.getSession();
+                
+                if (error) {
+                    console.error('Auth error:', error);
+                    // Clear any bad session data
+                    await supabaseClient.auth.signOut();
+                    window.location.href = '/login.html';
+                    return null;
+                }
+                
+                if (!session || !session.user) {
+                    // No valid session - redirect to login
+                    window.location.href = '/login.html';
+                    return null;
+                }
+                
+                return session.user;
+            } catch (err) {
+                console.error('Unexpected auth error:', err);
                 window.location.href = '/login.html';
                 return null;
             }
-            
-            return session.user;
         }
 
         // =====================================================
