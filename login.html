@@ -242,7 +242,7 @@
         const SUPABASE_URL = 'https://qydxhsevuydcscfqdjsd.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_avuk3uYKIEH0C1ikXpoUJA_VT4v5ymu';
         
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // =====================================================
         // STATE
@@ -301,7 +301,7 @@
             try {
                 if (isSignup) {
                     // Sign Up
-                    const { data, error } = await supabase.auth.signUp({
+                    const { data, error } = await supabaseClient.auth.signUp({
                         email,
                         password,
                         options: {
@@ -316,7 +316,7 @@
                     showSuccess('Account created! Please check your email to verify your account.');
                 } else {
                     // Log In
-                    const { data, error } = await supabase.auth.signInWithPassword({
+                    const { data, error } = await supabaseClient.auth.signInWithPassword({
                         email,
                         password
                     });
@@ -353,7 +353,7 @@
         // CHECK IF ALREADY LOGGED IN
         // =====================================================
         async function checkAuth() {
-            const { data: { user } } = await supabase.auth.getUser();
+            const { data: { user } } = await supabaseClient.auth.getUser();
             if (user) {
                 window.location.href = '/dashboard.html';
             }
