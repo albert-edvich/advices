@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account — Ask Darya</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --cream: #FFF8E7;
+            --rust: #C65D3B;
+            --deep-teal: #2D4654;
+            --sage: #7A9B76;
+            --warm-gray: #8B7E74;
+            --accent: #E8B298;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #FFF5DC 100%);
+            color: var(--deep-teal);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(122, 155, 118, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(198, 93, 59, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .site-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--rust);
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--deep-teal);
+            margin-bottom: 10px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(45, 70, 84, 0.08);
+            border: 2px solid rgba(122, 155, 118, 0.15);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--rust);
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            display: grid;
+            gap: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(122, 155, 118, 0.1);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--deep-teal);
+        }
+
+        .info-value {
+            color: var(--warm-gray);
+        }
+
+        .orders-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .order-card {
+            background: linear-gradient(135deg, rgba(122, 155, 118, 0.05), rgba(232, 178, 152, 0.05));
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(122, 155, 118, 0.2);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .order-id {
+            font-weight: 600;
+            color: var(--deep-teal);
+        }
+
+        .order-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background: rgba(122, 155, 118, 0.2);
+            color: var(--sage);
+        }
+
+        .status-pending {
+            background: rgba(232, 178, 152, 0.2);
+            color: var(--rust);
+        }
+
+        .order-items {
+            margin-top: 10px;
+        }
+
+        .order-item {
+            padding: 8px 0;
+            color: var(--warm-gray);
+        }
+
+        .logout-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--rust), #A84D2F);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(198, 93, 59, 0.3);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--rust);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--warm-gray);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--warm-gray);
+        }
+
+        @media (max-width: 768px) {
+            .section-card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://unsolicited-advice.store" class="back-link">← Back to Shop</a>
+        
+        <header>
+            <a href="https://unsolicited-advice.store" class="site-name">Ask Darya</a>
+            <h1>My Account</h1>
+        </header>
+
+        <!-- Profile Section -->
+        <div class="section-card">
+            <h2>Profile</h2>
+            <div id="profile-content" class="loading">Loading profile...</div>
+        </div>
+
+        <!-- Orders Section -->
+        <div class="section-card">
+            <h2>Order History</h2>
+            <div id="orders-content" class="loading">Loading orders...</div>
+        </div>
+
+        <!-- Subscriptions Section -->
+        <div class="section-card">
+            <h2>Active Subscriptions</h2>
+            <div id="subscriptions-content" class="loading">Loading subscriptions...</div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="logout-btn" onclick="handleLogout()">Log Out</button>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================
+        // SUPABASE CONFIGURATION
+        // =====================================================
+        // Replace these with your actual Supabase credentials
+        const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // =====================================================
+        // CHECK AUTHENTICATION
+        // =====================================================
+        async function checkAuth() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            
+            if (!user) {
+                // Redirect to login page if not authenticated
+                window.location.href = '/login.html';
+                return null;
+            }
+            
+            return user;
+        }
+
+        // =====================================================
+        // LOAD PROFILE
+        // =====================================================
+        async function loadProfile(userId) {
+            const { data, error } = await supabaseClient
+                .from('profiles')
+                .select('*')
+                .eq('id', userId)
+                .single();
+
+            if (error) {
+                document.getElementById('profile-content').innerHTML = 
+                    '<p class="empty-state">Error loading profile</p>';
+                return;
+            }
+
+            document.getElementById('profile-content').innerHTML = `
+                <div class="profile-info">
+                    <div class="info-row">
+                        <span class="info-label">Name:</span>
+                        <span class="info-value">${data.full_name || 'Not set'}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value">${data.email}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Member since:</span>
+                        <span class="info-value">${new Date(data.created_at).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // =====================================================
+        // LOAD ORDERS
+        // =====================================================
+        async function loadOrders(userId) {
+            const { data: orders, error } = await supabaseClient
+                .from('orders')
+                .select(`
+                    *,
+                    order_items (
+                        product_name,
+                        quantity,
+                        unit_price
+                    )
+                `)
+                .eq('user_id', userId)
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                document.getElementById('orders-content').innerHTML = 
+                    '<p class="empty-state">Error loading orders</p>';
+                return;
+            }
+
+            if (!orders || orders.length === 0) {
+                document.getElementById('orders-content').innerHTML = 
+                    '<p class="empty-state">No orders yet. <a href="https://unsolicited-advice.store">Start shopping!</a></p>';
+                return;
+            }
+
+            const ordersHTML = orders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">Order #${order.id.slice(0, 8)}</div>
+                            <div style="color: var(--warm-gray); font-size: 0.9rem;">
+                                ${new Date(order.created_at).toLocaleDateString()}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="order-status status-${order.status}">
+                                ${order.status}
+                            </div>
+                            <div style="text-align: right; margin-top: 5px; font-weight: 600;">
+                                $${order.total_amount}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-items">
+                        ${order.order_items.map(item => `
+                            <div class="order-item">
+                                ${item.quantity}x ${item.product_name} - $${item.unit_price}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('orders-content').innerHTML = 
+                `<div class="orders-list">${ordersHTML}</div>`;
+        }
+
+        // =====================================================
+        // LOAD SUBSCRIPTIONS
+        // =====================================================
+        async function loadSubscriptions(userId) {
+            const { data: subs, error } = await supabaseClient
+                .from('subscriptions')
+                .select(`
+                    *,
+                    products (name, price)
+                `)
+                .eq('user_id', userId)
+                .eq('status', 'active');
+
+            if (error) {
+                document.getElementById('subscriptions-content').innerHTML = 
+                    '<p class="empty-state">Error loading subscriptions</p>';
+                return;
+            }
+
+            if (!subs || subs.length === 0) {
+                document.getElementById('subscriptions-content').innerHTML = 
+                    '<p class="empty-state">No active subscriptions</p>';
+                return;
+            }
+
+            const subsHTML = subs.map(sub => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">${sub.products.name}</div>
+                            <div style="color: var(--warm-gray); font-size: 0.9rem;">
+                                Renews: ${new Date(sub.current_period_end).toLocaleDateString()}
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 600; color: var(--rust);">
+                                $${sub.products.price}/month
+                            </div>
+                            <div class="order-status status-completed">
+                                ${sub.status}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('subscriptions-content').innerHTML = subsHTML;
+        }
+
+        // =====================================================
+        // LOGOUT
+        // =====================================================
+        async function handleLogout() {
+            await supabaseClient.auth.signOut();
+            window.location.href = '/login.html';
+        }
+
+        // =====================================================
+        // INITIALIZE
+        // =====================================================
+        async function init() {
+            const user = await checkAuth();
+            if (user) {
+                loadProfile(user.id);
+                loadOrders(user.id);
+                loadSubscriptions(user.id);
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
