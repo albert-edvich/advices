@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Ask Darya</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --cream: #FFF8E7;
+            --rust: #C65D3B;
+            --deep-teal: #2D4654;
+            --sage: #7A9B76;
+            --warm-gray: #8B7E74;
+            --accent: #E8B298;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #FFF5DC 100%);
+            color: var(--deep-teal);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(122, 155, 118, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(198, 93, 59, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(45, 70, 84, 0.1);
+            border: 2px solid rgba(122, 155, 118, 0.15);
+        }
+
+        .site-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--rust);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--deep-teal);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: var(--deep-teal);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(122, 155, 118, 0.3);
+            border-radius: 12px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1rem;
+            color: var(--deep-teal);
+            background: var(--cream);
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--rust);
+            box-shadow: 0 0 0 4px rgba(198, 93, 59, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--rust), #A84D2F);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(198, 93, 59, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--warm-gray);
+        }
+
+        .toggle-link a {
+            color: var(--rust);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .toggle-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: rgba(198, 93, 59, 0.1);
+            border-left: 4px solid var(--rust);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: var(--rust);
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            background: rgba(122, 155, 118, 0.1);
+            border-left: 4px solid var(--sage);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: var(--sage);
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--rust);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 35px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://unsolicited-advice.store" class="back-link">← Back to Shop</a>
+        
+        <div class="card">
+            <a href="https://unsolicited-advice.store" class="site-name">Ask Darya</a>
+            <h1 id="form-title">Log In</h1>
+
+            <div id="message-container"></div>
+
+            <!-- Login/Signup Form -->
+            <form id="auth-form">
+                <div class="form-group" id="name-group" style="display: none;">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password" minlength="6">
+                </div>
+
+                <button type="submit" class="submit-btn" id="submit-btn">Log In</button>
+            </form>
+
+            <div class="toggle-link">
+                <span id="toggle-text">Don't have an account?</span>
+                <a href="#" id="toggle-mode">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================
+        // SUPABASE CONFIGURATION
+        // =====================================================
+        // Replace these with your actual Supabase credentials
+        const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // =====================================================
+        // STATE
+        // =====================================================
+        let isSignup = false;
+
+        // =====================================================
+        // UI ELEMENTS
+        // =====================================================
+        const form = document.getElementById('auth-form');
+        const formTitle = document.getElementById('form-title');
+        const nameGroup = document.getElementById('name-group');
+        const submitBtn = document.getElementById('submit-btn');
+        const toggleMode = document.getElementById('toggle-mode');
+        const toggleText = document.getElementById('toggle-text');
+        const messageContainer = document.getElementById('message-container');
+
+        // =====================================================
+        // TOGGLE BETWEEN LOGIN & SIGNUP
+        // =====================================================
+        toggleMode.addEventListener('click', (e) => {
+            e.preventDefault();
+            isSignup = !isSignup;
+
+            if (isSignup) {
+                formTitle.textContent = 'Sign Up';
+                nameGroup.style.display = 'block';
+                submitBtn.textContent = 'Sign Up';
+                toggleText.textContent = 'Already have an account?';
+                toggleMode.textContent = 'Log In';
+            } else {
+                formTitle.textContent = 'Log In';
+                nameGroup.style.display = 'none';
+                submitBtn.textContent = 'Log In';
+                toggleText.textContent = 'Don\'t have an account?';
+                toggleMode.textContent = 'Sign Up';
+            }
+
+            clearMessages();
+        });
+
+        // =====================================================
+        // HANDLE FORM SUBMISSION
+        // =====================================================
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearMessages();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const fullName = document.getElementById('full_name').value;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+
+            try {
+                if (isSignup) {
+                    // Sign Up
+                    const { data, error } = await supabase.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: {
+                                full_name: fullName
+                            }
+                        }
+                    });
+
+                    if (error) throw error;
+
+                    showSuccess('Account created! Please check your email to verify your account.');
+                } else {
+                    // Log In
+                    const { data, error } = await supabase.auth.signInWithPassword({
+                        email,
+                        password
+                    });
+
+                    if (error) throw error;
+
+                    // Redirect to dashboard
+                    window.location.href = '/dashboard.html';
+                }
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = isSignup ? 'Sign Up' : 'Log In';
+            }
+        });
+
+        // =====================================================
+        // MESSAGES
+        // =====================================================
+        function showError(message) {
+            messageContainer.innerHTML = `<div class="error-message">${message}</div>`;
+        }
+
+        function showSuccess(message) {
+            messageContainer.innerHTML = `<div class="success-message">${message}</div>`;
+        }
+
+        function clearMessages() {
+            messageContainer.innerHTML = '';
+        }
+
+        // =====================================================
+        // CHECK IF ALREADY LOGGED IN
+        // =====================================================
+        async function checkAuth() {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                window.location.href = '/dashboard.html';
+            }
+        }
+
+        checkAuth();
+    </script>
+</body>
+</html>
