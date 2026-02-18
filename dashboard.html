@@ -408,15 +408,15 @@
             `;
             }).join('');
 
-            // Update section title if admin - target the Orders section specifically
-            const sectionCards = document.querySelectorAll('.section-card');
-            const ordersSection = Array.from(sectionCards).find(card => 
-                card.querySelector('#orders-content')
-            );
-            if (ordersSection && isAdmin) {
-                const title = ordersSection.querySelector('h2');
-                if (title) {
-                    title.innerHTML = 'Order History <span style="background: var(--rust); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; margin-left: 10px; font-weight: 500;">ADMIN - ALL ORDERS</span>';
+            // Update Orders section title if admin - use direct parent targeting
+            if (isAdmin) {
+                const ordersContent = document.getElementById('orders-content');
+                if (ordersContent) {
+                    const ordersSection = ordersContent.closest('.section-card');
+                    const ordersTitle = ordersSection?.querySelector('h2');
+                    if (ordersTitle && !ordersTitle.querySelector('span')) {
+                        ordersTitle.innerHTML = 'Order History <span style="background: var(--rust); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; margin-left: 10px; font-weight: 500;">ADMIN - ALL ORDERS</span>';
+                    }
                 }
             }
 
@@ -497,15 +497,15 @@
             `;
             }).join('');
 
-            // Update section title if admin
-            const sectionCards = document.querySelectorAll('.section-card');
-            const subsSection = Array.from(sectionCards).find(card => 
-                card.querySelector('h2')?.textContent.includes('Subscriptions')
-            );
-            if (subsSection && isAdmin) {
-                const title = subsSection.querySelector('h2');
-                if (title) {
-                    title.innerHTML = 'Active Subscriptions <span style="background: var(--rust); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; margin-left: 10px; font-weight: 500;">ADMIN - ALL SUBSCRIPTIONS</span>';
+            // Update Subscriptions section title if admin - use direct parent targeting
+            if (isAdmin) {
+                const subsContent = document.getElementById('subscriptions-content');
+                if (subsContent) {
+                    const subsSection = subsContent.closest('.section-card');
+                    const subsTitle = subsSection?.querySelector('h2');
+                    if (subsTitle && !subsTitle.querySelector('span')) {
+                        subsTitle.innerHTML = 'Active Subscriptions <span style="background: var(--rust); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; margin-left: 10px; font-weight: 500;">ADMIN - ALL SUBSCRIPTIONS</span>';
+                    }
                 }
             }
 
