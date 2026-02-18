@@ -190,6 +190,38 @@
             text-decoration: underline;
         }
 
+        .forgot-link {
+            display: block;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: var(--rust);
+            text-decoration: none;
+            text-align: right;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-login-btn {
+            width: 100%;
+            padding: 16px;
+            background: white;
+            color: var(--rust);
+            border: 2px solid var(--rust);
+            border-radius: 50px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .back-to-login-btn:hover {
+            background: var(--cream);
+        }
+
         @media (max-width: 480px) {
             .card {
                 padding: 35px 25px;
@@ -222,12 +254,24 @@
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required placeholder="Enter your password" minlength="6">
+                    <a href="#" id="forgot-password-link" class="forgot-link">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="submit-btn" id="submit-btn">Log In</button>
             </form>
 
-            <div class="toggle-link">
+            <!-- Forgot Password Form -->
+            <form id="forgot-form" style="display: none;">
+                <div class="form-group">
+                    <label for="reset-email">Email</label>
+                    <input type="email" id="reset-email" name="reset-email" required placeholder="Enter your email">
+                </div>
+
+                <button type="submit" class="submit-btn" id="reset-btn">Send Reset Link</button>
+                <button type="button" class="back-to-login-btn" id="back-to-login">Back to Login</button>
+            </form>
+
+            <div class="toggle-link" id="toggle-container">
                 <span id="toggle-text">Don't have an account?</span>
                 <a href="#" id="toggle-mode">Sign Up</a>
             </div>
@@ -259,6 +303,13 @@
         const toggleMode = document.getElementById('toggle-mode');
         const toggleText = document.getElementById('toggle-text');
         const messageContainer = document.getElementById('message-container');
+        
+        // Forgot password elements
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+        const forgotForm = document.getElementById('forgot-form');
+        const resetBtn = document.getElementById('reset-btn');
+        const backToLoginBtn = document.getElementById('back-to-login');
+        const toggleContainer = document.getElementById('toggle-container');
 
         // =====================================================
         // TOGGLE BETWEEN LOGIN & SIGNUP
@@ -282,6 +333,55 @@
             }
 
             clearMessages();
+        });
+
+        // =====================================================
+        // FORGOT PASSWORD HANDLERS
+        // =====================================================
+        // Show forgot password form
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            form.style.display = 'none';
+            forgotForm.style.display = 'block';
+            toggleContainer.style.display = 'none';
+            formTitle.textContent = 'Reset Password';
+            clearMessages();
+        });
+
+        // Back to login
+        backToLoginBtn.addEventListener('click', () => {
+            forgotForm.style.display = 'none';
+            form.style.display = 'block';
+            toggleContainer.style.display = 'block';
+            formTitle.textContent = isSignup ? 'Sign Up' : 'Log In';
+            clearMessages();
+        });
+
+        // Handle forgot password form submission
+        forgotForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearMessages();
+
+            const email = document.getElementById('reset-email').value;
+
+            resetBtn.disabled = true;
+            resetBtn.textContent = 'Sending...';
+
+            try {
+                const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                    redirectTo: 'https://unsolicited-advice.store/reset-password.html'
+                });
+
+                if (error) throw error;
+
+                showSuccess('Password reset link sent! Check your email.');
+                document.getElementById('reset-email').value = '';
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                resetBtn.disabled = false;
+                resetBtn.textContent = 'Send Reset Link';
+            }
         });
 
         // =====================================================
