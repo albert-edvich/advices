@@ -262,15 +262,25 @@
         // CHECK AUTHENTICATION
         // =====================================================
         async function checkAuth() {
-            const { data: { user } } = await supabaseClient.auth.getUser();
+            // Prevent redirect loop
+            if (sessionStorage.getItem('checking_auth')) {
+                sessionStorage.removeItem('checking_auth');
+                return null;
+            }
             
-            if (!user) {
+            sessionStorage.setItem('checking_auth', 'true');
+            
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            
+            sessionStorage.removeItem('checking_auth');
+            
+            if (!session) {
                 // Redirect to login page if not authenticated
                 window.location.href = '/login.html';
                 return null;
             }
             
-            return user;
+            return session.user;
         }
 
         // =====================================================
