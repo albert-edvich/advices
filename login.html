@@ -350,21 +350,32 @@
         }
 
         // =====================================================
-        // CHECK IF ALREADY LOGGED IN (OPTIONAL)
+        // CHECK IF ALREADY LOGGED IN
         // =====================================================
-        // Commented out to prevent redirect loops
-        // Users can manually click "My Account" if already logged in
-        // Uncomment if you want auto-redirect after fixing session issues
-        
-        /*
         async function checkAuth() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                window.location.href = '/dashboard.html';
+            // Prevent redirect loop by checking URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const fromParam = urlParams.get('from');
+            
+            if (fromParam === 'dashboard' || fromParam === 'logout') {
+                // Came from dashboard or logout - don't redirect back
+                return;
+            }
+
+            try {
+                const { data: { session }, error } = await supabaseClient.auth.getSession();
+                
+                if (session && session.user) {
+                    // Already logged in - go to dashboard
+                    window.location.href = '/dashboard.html';
+                }
+            } catch (err) {
+                console.error('Auth check error:', err);
+                // Stay on login page if error
             }
         }
+
         checkAuth();
-        */
     </script>
 </body>
 </html>
